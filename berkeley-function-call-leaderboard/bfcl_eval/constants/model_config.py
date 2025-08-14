@@ -1912,6 +1912,18 @@ local_inference_model_map = {
         is_fc_model=False,
         underscore_to_dot=True,
     ),
+    "HuggingFaceTB/SmolLM3-3B-FC": ModelConfig(
+        model_name="HuggingFaceTB/SmolLM3-3B-FC",
+        display_name="SmolLM3-3B (FC)",
+        url="https://huggingface.co/HuggingFaceTB/SmolLM3-3B/",
+        org="HuggingFace",
+        license="apache-2.0",
+        model_handler=SmolLM3Handler,
+        input_price=None,
+        output_price=None,
+        is_fc_model=False,
+        underscore_to_dot=True,
+    ),
 }
 
 # Inference through third-party inference platforms for open-source models

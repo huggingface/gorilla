@@ -169,4 +169,5 @@ SUPPORTED_MODELS = [
     "katanemo/Arch-Agent-32B",
     "HuggingFaceTB/SmolLM3-SFT-FC",
     "HuggingFaceTB/SmolLM3-SFT-Merges-FC",
+    "HuggingFaceTB/SmolLM3-3B-FC",
 ]
