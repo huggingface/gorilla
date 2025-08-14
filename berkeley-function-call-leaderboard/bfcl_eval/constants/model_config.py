@@ -69,6 +69,9 @@ from bfcl_eval.model_handler.local_inference.salesforce_qwen import (
 )
 from bfcl_eval.model_handler.local_inference.think_agent import ThinkAgentHandler
 
+# trl-internal handlers
+from bfcl_eval.model_handler.local_inference.smollm3 import SmolLM3Handler
+
 # -----------------------------------------------------------------------------
 # A mapping of model identifiers to their respective model configurations.
 # Each key corresponds to the model id passed to the `--model` argument
@@ -1884,6 +1887,30 @@ local_inference_model_map = {
         output_price=None,
         is_fc_model=False,
         underscore_to_dot=False,
+    ),
+    "HuggingFaceTB/SmolLM3-SFT": ModelConfig(
+        model_name="HuggingFaceTB/SmolLM3-SFT",
+        display_name="SmolLM3-SFT (FC)",
+        url="https://huggingface.co/HuggingFaceTB/SmolLM3-SFT/",
+        org="HuggingFace",
+        license="apache-2.0",
+        model_handler=SmolLM3Handler,
+        input_price=None,
+        output_price=None,
+        is_fc_model=False,
+        underscore_to_dot=True,
+    ),
+    "HuggingFaceTB/SmolLM3-SFT-Merges": ModelConfig(
+        model_name="HuggingFaceTB/SmolLM3-SFT-Merges",
+        display_name="SmolLM3-SFT-Merges (FC)",
+        url="https://huggingface.co/HuggingFaceTB/SmolLM3-SFT-Merges/",
+        org="HuggingFace",
+        license="apache-2.0",
+        model_handler=SmolLM3Handler,
+        input_price=None,
+        output_price=None,
+        is_fc_model=False,
+        underscore_to_dot=True,
     ),
 }
 
