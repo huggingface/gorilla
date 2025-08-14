@@ -71,9 +71,9 @@ def get_args():
     return args
 
 
-def build_handler(model_name, temperature):
+def build_handler(model_name, temperature, revision=None):
     config = MODEL_CONFIG_MAPPING[model_name]
-    handler = config.model_handler(model_name, temperature)
+    handler = config.model_handler(model_name, temperature, revision)
     # Propagate config flags to the handler instance
     handler.is_fc_model = config.is_fc_model
     return handler
@@ -233,7 +233,7 @@ def multi_threaded_inference(handler, test_case, include_input_log, exclude_stat
 
 def generate_results(args, model_name, test_cases_total):
     update_mode = args.allow_overwrite
-    handler = build_handler(model_name, args.temperature)
+    handler = build_handler(model_name, args.temperature, args.revision)
 
     if handler.model_style == ModelStyle.OSSMODEL:
         # batch_inference will handle the writing of results
