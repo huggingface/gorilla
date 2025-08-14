@@ -68,6 +68,7 @@ class OSSHandler(BaseHandler, EnforceOverrides):
         backend: str,
         skip_server_setup: bool,
         local_model_path: Optional[str],
+        revision: Optional[str],
         include_input_log: bool,
         exclude_state_log: bool,
         update_mode: bool,
@@ -105,6 +106,8 @@ class OSSHandler(BaseHandler, EnforceOverrides):
                 "pretrained_model_name_or_path": self.model_path_or_id,
                 "trust_remote_code": True,
             }
+            if revision is not None:
+                load_kwargs["revision"] = revision
 
         self.tokenizer = AutoTokenizer.from_pretrained(**load_kwargs)
         config = AutoConfig.from_pretrained(**load_kwargs)
@@ -122,44 +125,49 @@ class OSSHandler(BaseHandler, EnforceOverrides):
 
         if not skip_server_setup:
             if backend == "vllm":
+                vllm_cmd = [
+                    "vllm",
+                    "serve",
+                    str(self.model_path_or_id),
+                    "--port",
+                    str(self.vllm_port),
+                    "--dtype",
+                    str(self.dtype),
+                    "--tensor-parallel-size",
+                    str(num_gpus),
+                    "--gpu-memory-utilization",
+                    str(gpu_memory_utilization),
+                    "--trust-remote-code",
+                ]
+                if revision is not None and local_model_path is None:
+                    vllm_cmd.extend(["--revision", revision])
                 process = subprocess.Popen(
-                    [
-                        "vllm",
-                        "serve",
-                        str(self.model_path_or_id),
-                        "--port",
-                        str(self.vllm_port),
-                        "--dtype",
-                        str(self.dtype),
-                        "--tensor-parallel-size",
-                        str(num_gpus),
-                        "--gpu-memory-utilization",
-                        str(gpu_memory_utilization),
-                        "--trust-remote-code",
-                    ],
+                    vllm_cmd,
                     stdout=subprocess.PIPE,  # Capture stdout
                     stderr=subprocess.PIPE,  # Capture stderr
                     text=True,  # To get the output as text instead of bytes
                 )
             elif backend == "sglang":
-
+                sglang_cmd = [
+                    "python",
+                    "-m",
+                    "sglang.launch_server",
+                    "--model-path",
+                    str(self.model_path_or_id),
+                    "--port",
+                    str(self.vllm_port),
+                    "--dtype",
+                    str(self.dtype),
+                    "--tp",
+                    str(num_gpus),
+                    "--mem-fraction-static",
+                    str(gpu_memory_utilization),
+                    "--trust-remote-code",
+                ]
+                if revision is not None and local_model_path is None:
+                    sglang_cmd.extend(["--revision", revision])
                 process = subprocess.Popen(
-                    [
-                        "python",
-                        "-m",
-                        "sglang.launch_server",
-                        "--model-path",
-                        str(self.model_path_or_id),
-                        "--port",
-                        str(self.vllm_port),
-                        "--dtype",
-                        str(self.dtype),
-                        "--tp",
-                        str(num_gpus),
-                        "--mem-fraction-static",
-                        str(gpu_memory_utilization),
-                        "--trust-remote-code",
-                    ],
+                    sglang_cmd,
                     stdout=subprocess.PIPE,  # Capture stdout
                     stderr=subprocess.PIPE,  # Capture stderr
                     text=True,  # To get the output as text instead of bytes
