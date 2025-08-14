@@ -1889,7 +1889,7 @@ local_inference_model_map = {
         underscore_to_dot=False,
     ),
     "HuggingFaceTB/SmolLM3-SFT": ModelConfig(
-        model_name="HuggingFaceTB/SmolLM3-SFT",
+        model_name="HuggingFaceTB/SmolLM3-SFT-FC",
         display_name="SmolLM3-SFT (FC)",
         url="https://huggingface.co/HuggingFaceTB/SmolLM3-SFT/",
         org="HuggingFace",
@@ -1901,7 +1901,7 @@ local_inference_model_map = {
         underscore_to_dot=True,
     ),
     "HuggingFaceTB/SmolLM3-SFT-Merges": ModelConfig(
-        model_name="HuggingFaceTB/SmolLM3-SFT-Merges",
+        model_name="HuggingFaceTB/SmolLM3-SFT-Merge-FC",
         display_name="SmolLM3-SFT-Merges (FC)",
         url="https://huggingface.co/HuggingFaceTB/SmolLM3-SFT-Merges/",
         org="HuggingFace",
