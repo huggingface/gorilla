@@ -7,11 +7,8 @@ import json
 class SmolLM3Handler(OSSHandler):
     def __init__(self, model_name, temperature, revision=None) -> None:
         super().__init__(model_name, temperature, revision)
-        self.is_fc_model = False
-        
-        # Initialize tokenizer for standalone usage (when not using batch_inference)
-        from transformers import AutoTokenizer
-        self.tokenizer = AutoTokenizer.from_pretrained(self.model_name, revision=self.revision)
+        self.is_fc_model = True
+        self.model_name_huggingface = model_name.replace("-FC", "")
 
     @override
     def _format_prompt(self, messages, function):
