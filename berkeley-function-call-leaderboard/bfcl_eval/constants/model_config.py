@@ -31,6 +31,7 @@ from bfcl_eval.model_handler.api_inference.qwen import (
 )
 from bfcl_eval.model_handler.api_inference.writer import WriterHandler
 from bfcl_eval.model_handler.api_inference.yi import YiHandler
+from bfcl_eval.model_handler.api_inference.glm import GLMAPIHandler
 from bfcl_eval.model_handler.local_inference.arch import ArchHandler
 from bfcl_eval.model_handler.local_inference.bielik import BielikHandler
 from bfcl_eval.model_handler.local_inference.bitagent import BitAgentHandler
@@ -68,6 +69,7 @@ from bfcl_eval.model_handler.local_inference.salesforce_qwen import (
     SalesforceQwenHandler,
 )
 from bfcl_eval.model_handler.local_inference.think_agent import ThinkAgentHandler
+from bfcl_eval.model_handler.api_inference.kimi import KimiHandler
 
 # trl-internal handlers
 from bfcl_eval.model_handler.local_inference.smollm3 import SmolLM3Handler
@@ -792,9 +794,9 @@ api_inference_model_map = {
         is_fc_model=False,
         underscore_to_dot=False,
     ),
-    "grok-3-beta-FC": ModelConfig(
-        model_name="grok-3-beta-FC",
-        display_name="Grok-3-beta (FC)",
+    "grok-4-0709-FC": ModelConfig(
+        model_name="grok-4-0709-FC",
+        display_name="Grok-4-0709 (FC)",
         url="https://docs.x.ai/docs/models",
         org="xAI",
         license="Proprietary",
@@ -804,39 +806,15 @@ api_inference_model_map = {
         is_fc_model=True,
         underscore_to_dot=True,
     ),
-    "grok-3-beta": ModelConfig(
-        model_name="grok-3-beta",
-        display_name="Grok-3-beta (Prompt)",
+    "grok-4-0709": ModelConfig(
+        model_name="grok-4-0709",
+        display_name="Grok-4-0709 (Prompt)",
         url="https://docs.x.ai/docs/models",
         org="xAI",
         license="Proprietary",
         model_handler=GrokHandler,
         input_price=3,
         output_price=15,
-        is_fc_model=False,
-        underscore_to_dot=False,
-    ),
-    "grok-3-mini-beta-FC": ModelConfig(
-        model_name="grok-3-mini-beta-FC",
-        display_name="Grok-3-mini-beta (FC)",
-        url="https://docs.x.ai/docs/models",
-        org="xAI",
-        license="Proprietary",
-        model_handler=GrokHandler,
-        input_price=0.3,
-        output_price=0.5,
-        is_fc_model=True,
-        underscore_to_dot=True,
-    ),
-    "grok-3-mini-beta": ModelConfig(
-        model_name="grok-3-mini-beta",
-        display_name="Grok-3-mini-beta (Prompt)",
-        url="https://docs.x.ai/docs/models",
-        org="xAI",
-        license="Proprietary",
-        model_handler=GrokHandler,
-        input_price=0.3,
-        output_price=0.5,
         is_fc_model=False,
         underscore_to_dot=False,
     ),
@@ -1020,22 +998,22 @@ api_inference_model_map = {
         is_fc_model=False,
         underscore_to_dot=False,
     ),
-    "qwen3-235b-a22b-FC": ModelConfig(
-        model_name="qwen3-235b-a22b-FC",
-        display_name="Qwen3-235B-A22B (FC)",
-        url="https://huggingface.co/Qwen/Qwen3-235B-A22B",
+    "qwen3-235b-a22b-instruct-2507-FC": ModelConfig(
+        model_name="qwen3-235b-a22b-instruct-2507-FC",
+        display_name="Qwen3-235B-A22B-Instruct-2507 (FC)",
+        url="https://huggingface.co/Qwen/Qwen3-235B-A22B-Instruct-2507",
         org="Qwen",
         license="apache-2.0",
         model_handler=QwenAPIHandler,
         input_price=None,
         output_price=None,
         is_fc_model=True,
-        underscore_to_dot=True,
+        underscore_to_dot=False,
     ),
-    "qwen3-235b-a22b": ModelConfig(
-        model_name="qwen3-235b-a22b",
-        display_name="Qwen3-235B-A22B (Prompt)",
-        url="https://huggingface.co/Qwen/Qwen3-235B-A22B",
+    "qwen3-235b-a22b-instruct-2507": ModelConfig(
+        model_name="qwen3-235b-a22b-instruct-2507",
+        display_name="Qwen3-235B-A22B-Instruct-2507 (Prompt)",
+        url="https://huggingface.co/Qwen/Qwen3-235B-A22B-Instruct-2507",
         org="Qwen",
         license="apache-2.0",
         model_handler=QwenAPIHandler,
@@ -1099,6 +1077,54 @@ api_inference_model_map = {
         org="Ling",
         license="MIT",
         model_handler=LingAPIHandler,
+        input_price=None,
+        output_price=None,
+        is_fc_model=False,
+        underscore_to_dot=False,
+    ),
+    "glm-4.5-FC": ModelConfig(
+        model_name="glm-4.5-FC",
+        display_name="GLM-4.5 (FC)",
+        url="https://huggingface.co/zai-org/GLM-4.5",
+        org="zai-org",
+        license="MIT",
+        model_handler=GLMAPIHandler,
+        input_price=None,
+        output_price=None,
+        is_fc_model=True,
+        underscore_to_dot=True,
+    ),
+    "glm-4.5-air-FC": ModelConfig(
+        model_name="glm-4.5-air-FC",
+        display_name="GLM-4.5-Air (FC)",
+        url="https://huggingface.co/zai-org/GLM-4.5-Air",
+        org="zai-org",
+        license="MIT",
+        model_handler=GLMAPIHandler,
+        input_price=None,
+        output_price=None,
+        is_fc_model=True,
+        underscore_to_dot=True,
+    ),
+    "kimi-k2-0711-preview-FC": ModelConfig(
+        model_name="moonshotai/Kimi-K2-Instruct-FC",
+        display_name="Moonshotai-Kimi-K2-Instruct (FC)",
+        url="https://huggingface.co/moonshotai/Kimi-K2-Instruct",
+        org="MoonshotAI",
+        license="modified-mit",
+        model_handler=KimiHandler,
+        input_price=None,
+        output_price=None,
+        is_fc_model=True,
+        underscore_to_dot=True,
+    ),
+    "kimi-k2-0711-preview": ModelConfig(
+        model_name="moonshotai/Kimi-K2-Instruct",
+        display_name="Moonshotai-Kimi-K2-Instruct (Prompt)",
+        url="https://huggingface.co/moonshotai/Kimi-K2-Instruct",
+        org="MoonshotAI",
+        license="modified-mit",
+        model_handler=KimiHandler,
         input_price=None,
         output_price=None,
         is_fc_model=False,
@@ -1672,10 +1698,10 @@ local_inference_model_map = {
         is_fc_model=False,
         underscore_to_dot=False,
     ),
-    "Qwen/Qwen3-235B-A22B-FC": ModelConfig(
-        model_name="Qwen/Qwen3-235B-A22B-FC",
-        display_name="Qwen3-235B-A22B (FC)",
-        url="https://huggingface.co/Qwen/Qwen3-235B-A22B",
+    "Qwen/Qwen3-235B-A22B-Instruct-2507-FC": ModelConfig(
+        model_name="Qwen/Qwen3-235B-A22B-Instruct-2507-FC",
+        display_name="Qwen3-235B-A22B-Instruct-2507 (FC)",
+        url="https://huggingface.co/Qwen/Qwen3-235B-A22B-Instruct-2507",
         org="Qwen",
         license="apache-2.0",
         model_handler=QwenFCHandler,
@@ -1684,10 +1710,10 @@ local_inference_model_map = {
         is_fc_model=True,
         underscore_to_dot=False,
     ),
-    "Qwen/Qwen3-235B-A22B": ModelConfig(
-        model_name="Qwen/Qwen3-235B-A22B",
-        display_name="Qwen3-235B-A22B (Prompt)",
-        url="https://huggingface.co/Qwen/Qwen3-235B-A22B",
+    "Qwen/Qwen3-235B-A22B-Instruct-2507": ModelConfig(
+        model_name="Qwen/Qwen3-235B-A22B-Instruct-2507",
+        display_name="Qwen3-235B-A22B-Instruct-2507 (Prompt)",
+        url="https://huggingface.co/Qwen/Qwen3-235B-A22B-Instruct-2507",
         org="Qwen",
         license="apache-2.0",
         model_handler=QwenHandler,
