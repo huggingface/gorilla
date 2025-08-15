@@ -1,4 +1,5 @@
 import argparse
+import inspect
 import json
 import time
 from concurrent.futures import ThreadPoolExecutor
@@ -73,7 +74,14 @@ def get_args():
 
 def build_handler(model_name, temperature, revision=None):
     config = MODEL_CONFIG_MAPPING[model_name]
-    handler = config.model_handler(model_name, temperature, revision)
+    
+    # Check if handler accepts revision parameter
+    sig = inspect.signature(config.model_handler.__init__)
+    if 'revision' in sig.parameters:
+        handler = config.model_handler(model_name, temperature, revision)
+    else:
+        handler = config.model_handler(model_name, temperature)
+    
     # Propagate config flags to the handler instance
     handler.is_fc_model = config.is_fc_model
     return handler
