@@ -1962,6 +1962,18 @@ local_inference_model_map = {
         is_fc_model=True,
         underscore_to_dot=False,
     ),
+    "HuggingFaceH4/Qwen3-4B-Agent-SFT-FC": ModelConfig(
+        model_name="HuggingFaceH4/Qwen3-4B-Agent-SFT-FC",
+        display_name="HuggingFaceH4-4B-Agent-SFT (FC)",
+        url="https://huggingface.co/HuggingFaceH4/Qwen3-4B-Agent-SFT",
+        org="HuggingFace",
+        license="apache-2.0",
+        model_handler=QwenFCHandler,
+        input_price=None,
+        output_price=None,
+        is_fc_model=True,
+        underscore_to_dot=False,
+    ),
 }
 
 # Inference through third-party inference platforms for open-source models
